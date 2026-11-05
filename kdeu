@@ -31,7 +31,7 @@ function update() {
       echo "AFTER: $AFTER"
     fi
 
-    git status || {
+    git status &>/dev/null || {
       echo "not in git repo, exiting..."
       return
     }
