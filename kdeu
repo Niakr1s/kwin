@@ -2,28 +2,45 @@
 
 function update() {
   (
-    cd ~/.local/share/kwin || return
+    local KWIN_DIR="$HOME/.local/share/kwin"
+
+    cd "$KWIN_DIR" || {
+      echo "couldn't cd to $KWIN_DIR"
+      echo "you should clone it first"
+      echo "git clone git@github.com:Niakr1s/kwin.git $KWIN_DIR"
+      return 1
+    }
+    echo "pwd: $PWD"
 
     local BEFORE
     BEFORE="$(./sera -l)"
+    echo "BEFORE: $BEFORE"
 
     ./sera -u
 
     local AFTER
     AFTER="$(./sera -l)"
 
-    echo "BEFORE: $BEFORE"
-    echo "AFTER: $AFTER"
+    # if [[ "$BEFORE" == "$AFTER" ]]; then
+    #   echo "There was no updates"
+    #   return
+    # else
+    #   echo "Installed update."
+    #   echo "AFTER: $AFTER"
+    # fi
 
-    git add .
+    git add . || return 1
 
     if git commit -m "update" -m "BEFORE: $BEFORE" -m "AFTER: $AFTER"; then
       echo "git: commited an update"
-      git push
+      git push || {
+        echo "couldn't push changes, are you own this git repo?"
+        return 1
+      }
       echo "git: pushed changes"
     else
-      echo "git: there was no changes, exiting..."
-      return
+      echo "git: something went wrong.."
+      return 1
     fi
   )
 }
