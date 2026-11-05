@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+FORCE="${FORCE:-0}"
+
 function update() {
   (
     local KWIN_DIR="$HOME/.local/share/kwin"
@@ -22,7 +24,7 @@ function update() {
     AFTER="$(./sera -l)"
 
     if [[ "$BEFORE" == "$AFTER" ]]; then
-      if [[ -z "$FORCE" ]]; then
+      if [[ "$FORCE" == "0" ]]; then
         echo "There was no updates"
         return
       fi
