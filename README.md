@@ -1,6 +1,11 @@
 # The script that automatically updates KDE plugins and updates git
 
-## Usage
+## Description
+
+The `kdeu` script is the main script. Under the hood it uses the `sera` binary
+from [sera](https://gitlab.com/cscs/sera) repo.
+
+## Install
 
 ```bash
 git clone <repo> ~/.local/share/kwin
@@ -8,16 +13,13 @@ ln -s ~/.local/share/kwin ~/.local/bin/ # or whatewer bin directory you are usin
 kdeu
 ```
 
+## Usage
+
 ### Environment variable flags
 
 - FORCE=1:
 You can use it to force push your changes in the repo, for example after you
 installed some new plugin
-
-## Description
-
-The `kdeu` script is the main script. Under the hood it uses the `sera` binary
-from [sera](https://gitlab.com/cscs/sera) repo.
 
 ## Making your own git repo
 
