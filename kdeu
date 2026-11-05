@@ -4,16 +4,20 @@ function update() {
   (
     cd ~/.local/share/kwin || return
 
-    local BEFORE=$(./sera -l)
+    local BEFORE
+    BEFORE="$(./sera -l)"
+
     ./sera -u
-    local AFTER=$(./sera -l)
+
+    local AFTER
+    AFTER="$(./sera -l)"
 
     echo "BEFORE: $BEFORE"
     echo "AFTER: $AFTER"
 
     git add .
 
-    if git commit -m "update"; then
+    if git commit -m "update" -m "BEFORE: $BEFORE" -m "AFTER: $AFTER"; then
       echo "git: commited an update"
       git push
       echo "git: pushed changes"
