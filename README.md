@@ -23,8 +23,8 @@ from [sera](https://gitlab.com/cscs/sera) repo.
 
 If you want to use my workflow:
 
-- copy the `./sera` and `./kdeu` files to `~/.local/share/kwin` and enjoy
+- copy the `./sera` and `./kdeu` files to `~/.local/share/kwin`
 - create a git repo there
 - set remote
 
-After it - use `kdeu` scrit for updates
+After it - use `kdeu` script for updates
