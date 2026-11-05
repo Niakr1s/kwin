@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+function update() {
+  (
+    cd ~/.local/share/kwin || return
+
+    local BEFORE=$(./sera -l)
+    ./sera -u
+    local AFTER=$(./sera -l)
+
+    echo "BEFORE: $BEFORE"
+    echo "AFTER: $AFTER"
+
+    git add .
+
+    if git commit -m "update"; then
+      echo "git: commited an update"
+      git push
+      echo "git: pushed changes"
+    else
+      echo "git: there was no changes, exiting..."
+      return
+    fi
+  )
+}
+
+update
