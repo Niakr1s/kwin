@@ -22,7 +22,7 @@ function update() {
     AFTER="$(./sera -l)"
 
     if [[ "$BEFORE" == "$AFTER" ]]; then
-      if [[ -z "$KDEU_SKIP_BEFORE_AFTER_CHECK" ]]; then
+      if [[ -z "$FORCE" ]]; then
         echo "There was no updates"
         return
       fi
