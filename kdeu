@@ -21,27 +21,34 @@ function update() {
     local AFTER
     AFTER="$(./sera -l)"
 
-    # if [[ "$BEFORE" == "$AFTER" ]]; then
-    #   echo "There was no updates"
-    #   return
-    # else
-    #   echo "Installed update."
-    #   echo "AFTER: $AFTER"
-    # fi
+    if [[ "$BEFORE" == "$AFTER" ]]; then
+      if [[ -z "$KDEU_SKIP_BEFORE_AFTER_CHECK" ]]; then
+        echo "There was no updates"
+        return
+      fi
+    else
+      echo "Installed update."
+      echo "AFTER: $AFTER"
+    fi
+
+    git status || {
+      echo "not in git repo, exiting..."
+      return
+    }
 
     git add . || return 1
 
-    if git commit -m "update" -m "BEFORE: $BEFORE" -m "AFTER: $AFTER"; then
-      echo "git: commited an update"
-      git push || {
-        echo "couldn't push changes, are you own this git repo?"
-        return 1
-      }
-      echo "git: pushed changes"
-    else
-      echo "git: something went wrong.."
+    git commit -m "update" -m "BEFORE: $BEFORE" -m "AFTER: $AFTER" || {
+      echo "git: coudn't commit an update"
       return 1
-    fi
+    }
+    echo "git: commited an update"
+
+    git push || {
+      echo "couldn't push changes, are you own this git repo?"
+      return 1
+    }
+    echo "git: pushed changes"
   )
 }
 
